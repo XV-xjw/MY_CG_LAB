@@ -8,8 +8,11 @@
 
 ## 📸 效果展示
 
+> **实时动态演示**：以下是 20,000 个粒子在鼠标引力下的运动状态。
 
-![功能演示](assets/text1_show.gif)
+<p align="center">
+  <img src="text1_show.gif" width="800">
+</p>
 
 ---
 
@@ -31,4 +34,3 @@
 
 ```bash
 pip install taichi
-这个实验READEME不够完整吧，我要一个完整的READEME
