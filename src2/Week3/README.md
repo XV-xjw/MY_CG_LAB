@@ -2,11 +2,38 @@
 
 本项目是计算机图形学课程的 3D 坐标变换实验，基于面向数据的并行编程框架 **Taichi** 和 Python 实现。项目从零推导并构建了完整的模型变换 (Model)、视图变换 (View) 和投影变换 (Projection) 矩阵，成功将 3D 空间中的几何体渲染到 2D 屏幕上，并实现了流畅的实时交互。
 
+# 计算机图形学实验：3D 空间坐标变换 (MVP) 深度实践
+
+本项目为 **Week 3** 计算机图形学实验内容。核心目标是在 **Taichi** 编程框架下，从底层数学原理出发，手动构建图形渲染管线中的几何阶段 (Geometry Stage)。通过实现模型变换、视图变换与透视投影变换，将 3D 几何体转换并渲染至 2D 屏幕空间。
+
+## 📂 项目目录结构
+
+本项目严格遵循实验要求的层级结构进行组织：
+
+```text
+Week3/
+├── Work1/                <-- 基础任务：三角形变换
+│   └── text.py           <-- 核心变换逻辑实现
+├── Work2/                <-- 选做任务：立方体线框渲染
+│   └── text_plus.py      <-- 3D 顶点与拓扑结构构建
+├── Work3/                <-- 进阶任务：动态交互相机系统
+│   └── text_pplus.py     <-- 包含 FOV 与相机位移控制
+├── Work5/                <-- 扩展实验资源包
+├── text6.py              <-- 附加功能与工具测试脚本
+├── Work1.gif             <-- 基础任务效果演示图
+├── Work2.gif             <-- 立方体旋转演示图
+├── Work3.gif             <-- 动态相机交互演示图
+└── README.md             <-- 项目说明文档
+---
+
+##📐 MVP 变换推导与总结
+顶点的最终屏幕位置是通过以下矩阵级联相乘得出的：$$V_{screen} = M_{viewport} \cdot M_{projection} \cdot M_{view} \cdot M_{model} \cdot V_{local}$$1. 模型变换 (Model Transformation)本实验实现了绕轴旋转。以绕 Z 轴旋转 $\alpha$ 为例，其变换矩阵为：$$M_{model(Z)} = \begin{pmatrix} \cos\alpha & -\sin\alpha & 0 & 0 \\ \sin\alpha & \cos\alpha & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{pmatrix}$$2. 视图变换 (View Transformation)视图变换将相机移动至原点，并使其看向 $-Z$ 方向。通过平移相机位置 $e(x, y, z)$ 的逆矩阵实现：$$M_{view} = \begin{pmatrix} 1 & 0 & 0 & -e_x \\ 0 & 1 & 0 & -e_y \\ 0 & 0 & 1 & -e_z \\ 0 & 0 & 0 & 1 \end{pmatrix}$$3. 透视投影变换 (Perspective Projection)这是本实验最具挑战性的部分，包含两个核心步骤：透视挤压 ($M_{p \to o}$)：利用相似三角形原理，将视锥平截头体挤压成长方体。正交投影 ($M_{ortho}$)：将长方体缩放并平移至标准设备坐标 (NDC) 的 $[-1, 1]^3$ 空间。最终实现的投影矩阵 $M_{proj}$ 整合了视场角 ($fov$)、屏幕宽高比 ($aspect$) 及近远平面 ($zNear, zFar$) 参数。
 ## 🎯 实验目标
 
 - 深入理解 3D 空间中的坐标变换流程（MVP 变换）。
 - 独立推导并用纯代码实现 `Model`、`View`、`Projection` 4x4 齐次坐标变换矩阵。
 - 掌握 Taichi 框架的基本语法、Kernel 并行计算与矩阵操作。
+
 
 ## 🚀 项目结构与功能演示
 
@@ -36,3 +63,4 @@
 ### 安装依赖
 ```bash
 pip install taichi
+
