@@ -42,13 +42,21 @@ $$V_{screen} = M_{viewport} \cdot M_{projection} \cdot M_{view} \cdot M_{model} 
 ### 1\. 模型变换 (Model Transformation)
 
 本实验主要实现绕轴旋转。以绕 Z 轴旋转 $\alpha$ 为例，其变换矩阵为：
-$$M_{model(Z)} = \begin{pmatrix} \cos\alpha & -\sin\alpha & 0 & 0 \\ \sin\alpha & \cos\alpha & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{pmatrix}$$
-
+$$M_{model(Z)} = \begin{pmatrix} 
+\cos\alpha & -\sin\alpha & 0 & 0 \\ 
+\sin\alpha & \cos\alpha & 0 & 0 \\ 
+0 & 0 & 1 & 0 \\ 
+0 & 0 & 0 & 1 
+\end{pmatrix}$$
 ### 2\. 视图变换 (View Transformation)
 
 视图变换将相机移动至原点，并使其看向 $-Z$ 方向。在本实验中，通过平移相机位置 $e(x, y, z)$ 的逆矩阵实现：
-$$M_{view} = \begin{pmatrix} 1 & 0 & 0 & -e_x \\ 0 & 1 & 0 & -e_y \\ 0 & 0 & 1 & -e_z \\ 0 & 0 & 0 & 1 \end{pmatrix}$$
-
+$$M_{view} = \begin{pmatrix} 
+1 & 0 & 0 & -e_x \\ 
+0 & 1 & 0 & -e_y \\ 
+0 & 0 & 1 & -e_z \\ 
+0 & 0 & 0 & 1 
+\end{pmatrix}$$
 ### 3\. 透视投影变换 (Perspective Projection)
 
 这是本项目最核心的数学部分，分为两个子步骤：
@@ -103,8 +111,4 @@ pip install taichi
 | **Q / E** | 相机沿 Z 轴推拉 (拉远 / 拉近) (仅 Work3) |
 | **Esc** | 安全退出程序 |
 
------
 
-这份文档现在既有宏观的项目结构，又有微观的数学细节，完全符合一份优秀实验报告的标准。
-
-既然你提到了要像“打磨作品”一样对待它，**你是否需要我为你写一段关于“透视除法（Perspective Division）”在代码中具体是如何实现的解析？** 这一步在代码里虽然只有一行，但在数学推导中却是从 4D 回到 3D 的关键。
