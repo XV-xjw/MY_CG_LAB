@@ -40,42 +40,55 @@ Week3/
 ## 📐 MVP 变换推导与总结
 
 顶点的最终屏幕位置是通过以下矩阵级联相乘得出的：
-$$V_{screen} = M_{viewport} \cdot M_{projection} \cdot M_{view} \cdot M_{model} \cdot V_{local}$$
+$$V_{\text{screen}} = M_{\text{viewport}} \cdot M_{\text{projection}} \cdot M_{\text{view}} \cdot M_{\text{model}} \cdot V_{\text{local}}$$
 
-### 1\. 模型变换 (Model Transformation)
+### 1. 模型变换 (Model Transformation)
 
-本实验主要实现绕轴旋转。以绕 Z 轴旋转 $\alpha$ 为例，其变换矩阵为：
-$$M_{model(Z)} = \begin{pmatrix} 
+本实验主要实现绕轴旋转。以绕 $Z$ 轴旋转 $\alpha$ 为例，其变换矩阵为：
+$$M_{\text{model}(Z)} = \begin{pmatrix} 
 \cos\alpha & -\sin\alpha & 0 & 0 \\ 
 \sin\alpha & \cos\alpha & 0 & 0 \\ 
 0 & 0 & 1 & 0 \\ 
 0 & 0 & 0 & 1 
 \end{pmatrix}$$
-### 2\. 视图变换 (View Transformation)
 
-视图变换将相机移动至原点，并使其看向 $-Z$ 方向。在本实验中，通过平移相机位置 $e(x, y, z)$ 的逆矩阵实现：
-$$M_{view} = \begin{pmatrix} 
+### 2. 视图变换 (View Transformation)
+
+视图变换将相机移动至原点，并使其看向 $-Z$ 方向。在本实验中，通过平移相机位置 $e(e_x, e_y, e_z)$ 的逆矩阵实现：
+$$M_{\text{view}} = \begin{pmatrix} 
 1 & 0 & 0 & -e_x \\ 
 0 & 1 & 0 & -e_y \\ 
 0 & 0 & 1 & -e_z \\ 
 0 & 0 & 0 & 1 
 \end{pmatrix}$$
-### 3\. 透视投影变换 (Perspective Projection)
+
+### 3. 透视投影变换 (Perspective Projection)
 
 这是本项目最核心的数学部分，分为两个子步骤：
 
-   **透视挤压 ($M_{persp \to ortho}$)**：利用相似三角形原理，将视锥平截头体挤压成长方体。其核心逻辑是保持 $z$ 轴上的近平面和远平面不变，同时将 $z$ 值映射到 $w$ 分量以便后续进行透视除法。
-   **正交投影 ($M_{ortho}$)**：将长方体缩放并平移至标准设备坐标 (NDC) 的 $[-1, 1]^3$ 空间。
+1.  **透视挤压 ($M_{\text{persp} \to \text{ortho}}$)**：利用相似三角形原理，将视锥平截头体挤压成长方体。其核心逻辑是保持 $z$ 轴上的近平面和远平面不变，同时将 $z$ 值映射到 $w$ 分量以便后续进行透视除法。
+2.  **正交投影 ($M_{\text{ortho}}$)**：将长方体缩放并平移至标准设备坐标 (NDC) 的 $[-1, 1]^3$ 空间。
 
-最终整合后的投影矩阵 $M_{proj}$ 考虑了视场角 ($fov$)、屏幕宽高比 ($aspect$) 及近远平面距离。
+最终整合后的投影矩阵 $M_{\text{proj}}$ 考虑了视场角 ($\text{fov}$)、屏幕宽高比 ($\text{aspect}$) 及近远平面距离。
 
-### 4\. 姿态插值过渡（Pose Interpolation）
-**核心实现逻辑多维模型变换矩阵**:扩展了 get_model_matrix 函数，支持 X、Y、Z 三轴独立的旋转以及三维平移向量。
-**线性插值 (Lerp)**：旋转插值：对三个轴的角度分别进行线性插值：$Angle_t = Angle_0 + t \cdot (Angle_1 - Angle_0)$。
-**位移插值**：对空间坐标进行线性插值，使立方体在两点间直线移动。抛物线轨迹优化：为了增强视觉表现力，在位移插值的基础上引入了基于 $sin(t \cdot \pi)$ 的高度偏移，模拟立方体从起点“跃迁”到终点的动态效果。
+---
 
-**位置插值**：$$P_t = (1 - t)P_0 + tP_1$$
-**旋转插值**：$$Angle_t = (1 - t)Angle_0 + tAngle_1$$
+### 4. 姿态插值过渡 (Pose Interpolation)
+
+**核心实现逻辑：**
+* **多维模型变换矩阵**：扩展了 `get_model_matrix` 函数，支持 $X, Y, Z$ 三轴独立的旋转以及三维平移向量。
+* **线性插值 (Lerp)**：
+    * **旋转插值**：对三个轴的角度分别进行线性插值：$$\text{Angle}_t = \text{Angle}_0 + t \cdot (\text{Angle}_1 - \text{Angle}_0)$$
+    * **位移插值**：对空间坐标进行线性插值，使立方体在两点间直线移动。
+* **轨迹优化**：引入基于 $\sin(t \cdot \pi)$ 的高度偏移，模拟立方体从起点到终点的“跃迁”动态效果。
+
+**插值公式定义：**
+
+* **位置插值 (带轨迹修正)**：
+$$P_t = (1 - t)P_0 + tP_1 + \begin{pmatrix} 0 \\ A \cdot \sin(t\pi) \\ 0 \text{ (or } z\text{)} \end{pmatrix}$$
+
+* **旋转插值**：
+$$\text{Angle}_t = (1 - t)\text{Angle}_0 + t\text{Angle}_1$$
 
 -----
 
