@@ -47,13 +47,27 @@ $$V_{screen} = M_{viewport} \cdot M_{projection} \cdot M_{view} \cdot M_{model} 
 
 本实验主要实现绕轴旋转。以绕 Z 轴旋转 $\alpha$ 为例，其变换矩阵为：
 
-$$M_{model(Z)} = \begin{pmatrix} \cos\alpha & -\sin\alpha & 0 & 0 \\ \sin\alpha & \cos\alpha & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{pmatrix}$$
+$$
+M_{\text{model}(Z)} = \begin{pmatrix}
+\cos\alpha & -\sin\alpha & 0 & 0 \\
+\sin\alpha & \cos\alpha & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1
+\end{pmatrix}
+$$
 
 ### 2. 视图变换 (View Transformation)
 
 视图变换将相机移动至原点，并使其看向 $-Z$ 方向。在本实验中，通过平移相机位置 $e(x, y, z)$ 的逆矩阵实现：
 
-$$M_{view} = \begin{pmatrix} 1 & 0 & 0 & -e_x \\ 0 & 1 & 0 & -e_y \\ 0 & 0 & 1 & -e_z \\ 0 & 0 & 0 & 1 \end{pmatrix}$$
+$$
+M_{\text{view}} = \begin{pmatrix}
+1 & 0 & 0 & -e_x \\
+0 & 1 & 0 & -e_y \\
+0 & 0 & 1 & -e_z \\
+0 & 0 & 0 & 1
+\end{pmatrix}
+$$
 
 ### 3. 透视投影变换 (Perspective Projection)
 
