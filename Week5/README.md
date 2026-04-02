@@ -86,7 +86,9 @@ $$
       - **端点插值**：贝塞尔曲线严格穿过首尾点，而 B 样条通常在控制多边形内部收缩。
   - **演示**：![Spiral Comparison](./text3_spiral.gif)
   - **截图**：贝塞尔曲线严格穿过首尾点，而 B 样条却不一定，但是通常控制在多边形内部收缩
+      - **贝塞尔曲线**：
 ![Endpoint Difference1](./start_end_diff_1.png)
+      - **B样条**：
 ![Endpoint Difference2](./start_end_diff_2.png)
 
 
