@@ -85,6 +85,8 @@ $$
       - **螺旋线测试**：由于贝塞尔曲线具有向中心坍缩的倾向，在绘制复杂螺旋时会失去外轮廓；而 B 样条能更好地维持局部细节。
       - **端点插值**：贝塞尔曲线严格穿过首尾点，而 B 样条通常在控制多边形内部收缩。
   - **演示与截图**：![Spiral Comparison](./text3_spiral.gif)
+![Endpoint Difference1](./start_end_diff_1.png)
+![Endpoint Difference2](./start_end_diff_2.png)
 
 
 -----
