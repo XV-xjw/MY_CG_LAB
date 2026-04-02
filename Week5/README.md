@@ -72,7 +72,7 @@ $$
 ### 2\. 交互进化：动态拖拽系统 (`text1` vs `text3`)
 
   - **功能描述**：从简单的“点击生成”进化到“实时抓取”。通过维护 `is_dragging` 状态机，系统可以实时识别鼠标与控制点的距离，并在每一帧同步更新数据。这使得用户可以“玩”曲线，直观感受几何形变。
-  - **效果演示**：![Interaction Evolution](./text1vstext3.gif)
+  - **效果演示**：![Interaction Evolution](./text1vstext3gif.gif)
 
 ### 3\. 核心特性：局部控制验证 (`text3_drag`)
 
@@ -84,7 +84,8 @@ $$
   - **特性差异**：
       - **螺旋线测试**：由于贝塞尔曲线具有向中心坍缩的倾向，在绘制复杂螺旋时会失去外轮廓；而 B 样条能更好地维持局部细节。
       - **端点插值**：贝塞尔曲线严格穿过首尾点，而 B 样条通常在控制多边形内部收缩。
-  - **演示与截图**：![Spiral Comparison](./text3_spiral.gif)
+  - **演示**：![Spiral Comparison](./text3_spiral.gif)
+  - **截图**：贝塞尔曲线严格穿过首尾点，而 B 样条却不一定，但是通常控制在多边形内部收缩
 ![Endpoint Difference1](./start_end_diff_1.png)
 ![Endpoint Difference2](./start_end_diff_2.png)
 
