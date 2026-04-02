@@ -109,7 +109,7 @@ pip install taichi numpy
 python text3.py
 ```
 
-### 操作指南
+### text3对应程序的操作指南
 
 | 按键 | 功能说明 |
 | :--- | :--- |
