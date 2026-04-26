@@ -45,7 +45,7 @@ $$P_{start} = P + \mathbf{N} \times 10^{-3}$$
 
 ## 💻 项目版本演示与关键代码
 
-### 版本 A：Phong 基础版
+### 版本 A：Phong 基础版(源代码为text1.py)
 **特点**：采用等腰三角形分布，三个物体互不遮挡，便于观察单一物体的光照表现。
 
 ```python
@@ -54,8 +54,8 @@ R = normalize(reflect(-L, N))
 spec = ti.max(0.0, R.dot(V)) ** shininess[None]
 color = ambient + diffuse + specular
 ```
-
-### 版本 B：进阶阴影版
+ - **效果演示**：![Text1 Basic](./text1.gif)
+### 版本 B：进阶阴影版(源代码为text3.py)
 **特点**：采用深度重叠布局，红色球体部分遮挡蓝色圆锥，开启硬阴影以增强空间层次感。
 
 ```python
@@ -68,7 +68,7 @@ t_s, _ = intersect_sphere(shadow_ro, shadow_rd, sphere_center, radius)
 if 0 < t_s < light_dist: 
     color = ambient # 处于阴影，仅保留环境光
 ```
-
+ - **效果演示**：![Text1 Basic](./text3.gif)
 ---
 
 ## 📊 运行结果分析
