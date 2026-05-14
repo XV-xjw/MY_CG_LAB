@@ -52,3 +52,36 @@ $$PixelColor = \frac{1}{N} \sum_{i=1}^{N} RayCast(u + \Delta u_i, v + \Delta v_i
     显式接收所有返回值，避免 Taichi 内核在元组解析时出现寄存器分配异常：
     ```python
     t, N, obj_color, mat_id = scene_intersect(ro, rd)
+
+*  **修改遮挡逻辑**:当阴影射线击中 MAT_GLASS 时，赋予光线 0.95 的衰减系数并允许其继续穿透。这种迭代检测确保了玻璃材质不仅能折射，还能投射出符合物理特性的浅色阴影：
+  ```python
+  if s_mat == MAT_GLASS:
+    visibility *= 0.95 
+    shadow_ray_orig += L * (s_t + 1e-4)
+ ```
+    
+---
+
+## 📊 版本特性对比
+
+| 特性 | v1 基础版 | v2 进阶版 | v3 最终精修版 |
+| :--- | :--- | :--- | :--- |
+| **材质支持** | 漫反射、镜面 | + 玻璃折射 | + **玻璃透光阴影** |
+| **边缘处理** | 原始锯齿 | 采样抗锯齿 (SPP) | 高质量平滑边缘 |
+| **代码鲁棒性** | 基础 | 存在变量解构隐患 | **显式解构消除 Bug** |
+
+---
+
+## 🛠 环境依赖与运行指南
+
+### 1. 运行环境
+*   **Python**: 3.9+
+*   **Taichi**: 1.6.0+
+###  2. 交互操作
+GUI 实时调优：支持动态调整 Max Bounces（弹射次数）与 SPP（采样率）。
+光源交互：支持实时拖动光源，同步观察阴影与高光的物理反馈。
+### 3. 快速启动
+```bash
+pip install taichi
+python text3_final_refined.py
+
