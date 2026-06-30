@@ -36,7 +36,7 @@ $$L_{total} = L_{sil}\;(+\,L_{rgb}) + w_{lap}L_{lap} + w_{edge}L_{edge} + w_{nor
 
 **优化中期（Epoch 80，总 Loss 0.1000）**：球体刚开始向外凸出头部和四肢雏形，整体仍接近球状，细节尚未分化。
 
-![阶段一中期](images/stage1_epoch080.png)
+![阶段一中期](images/stage1.png)
 
 **优化收敛（Epoch 299，总 Loss 0.0179，剪影误差 0.0141）**：头、耳、四肢、躯干轮廓清晰可辨，与 Ground Truth 剪影高度吻合。
 
