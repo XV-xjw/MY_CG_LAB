@@ -1,0 +1,4 @@
+torch>=1.10
+numpy==1.23.1
+smplx>=0.1.28
+matplotlib>=3.5

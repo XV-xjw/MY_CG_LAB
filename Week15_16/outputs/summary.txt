@@ -1,0 +1,11 @@
+===== 任务1：SMPL 模型基础信息 =====
+顶点数 (num vertices): 6890
+面片数 (num faces):    13776
+关节数 (num joints):   24
+betas 维度:            10
+关节顺序: ['pelvis', 'left_hip', 'right_hip', 'spine1', 'left_knee', 'right_knee', 'spine2', 'left_ankle', 'right_ankle', 'spine3', 'left_foot', 'right_foot', 'neck', 'left_collar', 'right_collar', 'head', 'left_shoulder', 'right_shoulder', 'left_elbow', 'right_elbow', 'left_wrist', 'right_wrist', 'left_hand', 'right_hand']
+
+===== 任务7：手写 LBS 与官方前向结果一致性验证 =====
+Mean Absolute Error (MAE): 0.00000000e+00
+Max  Absolute Error:       0.00000000e+00
+结论：误差处于浮点计算精度范围内，说明手写 LBS 实现与官方 smplx 前向过程一致。
