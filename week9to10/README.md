@@ -1,7 +1,5 @@
+## 学号：202411081031   姓名：胥佳维   专业：计算机科学与技术
 # 基于 Taichi 的交互式 Whitted-Style 光线追踪渲染器
-
-[![Language](https://img.shields.io/badge/Language-Python-blue.svg)](https://www.python.org/)
-[![Framework](https://img.shields.io/badge/Framework-Taichi-red.svg)](https://taichi-lang.org/)
 
 本项目为计算机图形学课程实验作业。利用 **Taichi** 高性能并行计算框架，在 GPU 上实现了一个支持递归光影效果、物理材质建模及工程级鲁棒性优化的 Whitted-Style 光线追踪系统。
 
